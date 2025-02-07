@@ -19,16 +19,16 @@ public class Payment extends AbstractEntity{
     private Long paymentId;
 
     @NotNull(message = "Payment method is mandatory")
-    private String paymentMethod; // Phương thức thanh toán (ví dụ: "Credit Card")
+    private String paymentMethod;
 
     @NotNull(message = "Amount is mandatory")
-    private Double amount; // Số tiền thanh toán
+    private Double amount;
 
     @NotNull(message = "Payment date is mandatory")
-    private LocalDate paymentDate; // Ngày thanh toán
+    private LocalDate paymentDate;
 
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "orderId")
-    private Order order; // Mối quan hệ với Order
+    private Order order;
 
 }

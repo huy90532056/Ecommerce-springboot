@@ -21,18 +21,18 @@ public class Review {
     @NotNull(message = "Customer is mandatory")
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user; // Mối quan hệ với Customer
+    private User user;
 
     @NotNull(message = "Product is mandatory")
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")
-    private Product product; // Mối quan hệ với Product
+    private Product product;
 
     @NotBlank(message = "Comment is mandatory")
-    private String comment; // Nhận xét của khách hàng
+    private String comment;
 
     @NotNull(message = "Rating is mandatory")
     @Positive(message = "Rating must be positive")
-    private Integer rating; // Điểm đánh giá (có thể từ 1 đến 5)
+    private Integer rating;
 
 }

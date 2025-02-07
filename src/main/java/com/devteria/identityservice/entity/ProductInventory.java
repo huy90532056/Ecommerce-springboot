@@ -18,13 +18,13 @@ public class ProductInventory extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")
-    private Product product;  // Mối quan hệ One-to-One với Product
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "inventory_id", referencedColumnName = "inventoryId")
-    private Inventory inventory;  // Mối quan hệ Many-to-One với Inventory
+    private Inventory inventory;
 
     @NotNull(message = "Quantity is mandatory")
-    private Integer quantity;  // Số lượng sản phẩm trong kho
+    private Integer quantity;
 
 }

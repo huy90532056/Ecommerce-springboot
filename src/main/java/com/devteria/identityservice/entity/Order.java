@@ -23,24 +23,24 @@ public class Order extends AbstractEntity{
     @NotNull(message = "Customer is mandatory")
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user; // Mối quan hệ với User (khách hàng)
+    private User user;
 
     @NotNull(message = "Order date is mandatory")
     private LocalDate orderDate;
 
     @NotNull(message = "Status is mandatory")
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // Enum để lưu trạng thái của đơn hàng
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderItem> items; // Danh sách các OrderItem
+    private List<OrderItem> items;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id", referencedColumnName = "paymentId")
-    private Payment payment; // Thông tin thanh toán
+    private Payment payment;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_id", referencedColumnName = "trackingId")
-    private ShippingTracker shipping; // Thông tin giao hàng
+    private ShippingTracker shipping;
 
 }

@@ -19,16 +19,16 @@ public class OrderItem extends AbstractEntity{
     @NotNull(message = "Product is mandatory")
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")
-    private Product product; // Mối quan hệ với Product
+    private Product product;
 
     @NotNull(message = "Quantity is mandatory")
-    private Integer quantity; // Số lượng sản phẩm
+    private Integer quantity;
 
     @NotNull(message = "Total price is mandatory")
-    private Double totalPrice; // Tổng giá cho sản phẩm (có thể được tính toán từ quantity và price của sản phẩm)
+    private Double totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "orderId")
-    private Order order; // Mối quan hệ với Order
+    private Order order;
 
 }

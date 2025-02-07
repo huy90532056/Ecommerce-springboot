@@ -1,9 +1,6 @@
 package com.devteria.identityservice.service;
 
-import com.devteria.identityservice.dto.request.AuthenticationRequest;
-import com.devteria.identityservice.dto.request.IntrospectRequest;
-import com.devteria.identityservice.dto.request.LogoutRequest;
-import com.devteria.identityservice.dto.request.RefreshRequest;
+import com.devteria.identityservice.dto.request.*;
 import com.devteria.identityservice.dto.response.AuthenticationResponse;
 import com.devteria.identityservice.dto.response.IntrospectResponse;
 import com.devteria.identityservice.entity.InvalidatedToken;
@@ -11,6 +8,7 @@ import com.devteria.identityservice.entity.User;
 import com.devteria.identityservice.exception.AppException;
 import com.devteria.identityservice.exception.ErrorCode;
 import com.devteria.identityservice.repository.InvalidatedTokenRepository;
+import com.devteria.identityservice.repository.OutboundIdentityClient;
 import com.devteria.identityservice.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -42,6 +40,7 @@ import java.util.UUID;
 public class AuthenticationService {
     UserRepository userRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
+    OutboundIdentityClient outboundIdentityClient;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -54,6 +53,39 @@ public class AuthenticationService {
     @NonFinal
     @Value("${jwt.refreshable-duration}")
     protected long REFRESHABLE_DURATION;
+
+    @NonFinal
+    @Value("${google.oauth.client-id}")
+    protected String CLIENT_ID;
+
+    @NonFinal
+    @Value("${google.oauth.client-secret}")
+    protected String CLIENT_SECRET;
+
+    @NonFinal
+    @Value("${google.oauth.redirect-url}")
+    protected String REDIRECT_URL;
+
+    @NonFinal
+    @Value("${google.oauth.grant-type}")
+    protected String GRANT_TYPE;
+
+    public AuthenticationResponse outboundAuthenticate(String code){
+        var response = outboundIdentityClient.exchangeToken(ExchangeTokenRequest.builder()
+                .code(code)
+                .clientId(CLIENT_ID)
+                .clientSecret(CLIENT_SECRET)
+                .redirectUri(REDIRECT_URL)
+                .grantType(GRANT_TYPE)
+                .build());
+
+        log.info("TOKEN RESPONSE {}", response);
+
+        return AuthenticationResponse.builder()
+                .token(response.getAccessToken())
+                .build();
+    }
+
 
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();

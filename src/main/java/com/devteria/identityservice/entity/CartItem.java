@@ -17,13 +17,13 @@ public class CartItem extends AbstractEntity{
     private Long cartItemId;
 
     @NotNull(message = "Quantity is mandatory")
-    private Integer quantity; // Số lượng sản phẩm trong giỏ hàng
+    private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private Cart cart; // Mối quan hệ với Cart
+    private Cart cart;
 
 }

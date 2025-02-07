@@ -20,8 +20,8 @@ public class Inventory extends AbstractEntity {
     private Long inventoryId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)  // Tạo khóa ngoại trỏ tới User ID
-    private User user;  // Mỗi Inventory sẽ có 1 User
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductInventory> productInventories = new ArrayList<>();

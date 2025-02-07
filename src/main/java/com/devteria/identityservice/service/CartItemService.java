@@ -23,7 +23,6 @@ public class CartItemService {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
 
-    // Create new CartItem
     public CartItemResponse createCartItem(CartItemCreationRequest request) {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -36,10 +35,8 @@ public class CartItemService {
         cartItem.setProduct(product);
         cartItem.setCart(cart);
 
-        // Save CartItem to repository
         cartItem = cartItemRepository.save(cartItem);
 
-        // Convert CartItem to CartItemResponse
         CartItemResponse response = new CartItemResponse();
         response.setCartItemId(cartItem.getCartItemId());
         response.setQuantity(cartItem.getQuantity());
@@ -49,7 +46,6 @@ public class CartItemService {
         return response;
     }
 
-    // Get all CartItems
     public List<CartItemResponse> getAllCartItems() {
         return cartItemRepository.findAll().stream()
                 .map(cartItem -> {
@@ -63,7 +59,6 @@ public class CartItemService {
                 .toList();
     }
 
-    // Get CartItem by ID
     public CartItemResponse getCartItemById(Long cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new AppException(ErrorCode.CART_ITEM_NOT_FOUND));
@@ -77,7 +72,6 @@ public class CartItemService {
         return response;
     }
 
-    // Update CartItem
     public CartItemResponse updateCartItem(Long cartItemId, CartItemCreationRequest request) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new AppException(ErrorCode.CART_ITEM_NOT_FOUND));
@@ -103,7 +97,6 @@ public class CartItemService {
         return response;
     }
 
-    // Delete CartItem
     public void deleteCartItem(Long cartItemId) {
         if (!cartItemRepository.existsById(cartItemId)) {
             throw new AppException(ErrorCode.CART_ITEM_NOT_FOUND);
